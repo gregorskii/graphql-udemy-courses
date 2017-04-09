@@ -1,0 +1,13 @@
+.likeButton {
+  padding: 0;
+  background-color: transparent;
+  border: none;
+}
+
+.likeButton:focus {
+  background-color: transparent;
+}
+
+.likeCount {
+  margin-left: 5px;
+}

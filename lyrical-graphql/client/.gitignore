@@ -1,0 +1,9 @@
+node_modules
+dist
+npm-debug.log
+test/unit/results
+
+# IntelliJ
+*.iml
+/.idea
+.DS_Store
