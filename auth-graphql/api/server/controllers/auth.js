@@ -47,6 +47,12 @@ class AuthController {
       })({ body: { email, password } });
     });
   }
+
+  static logout(req) {
+    const { user } = req;
+    req.logout();
+    return user;
+  }
 }
 
 export default AuthController;
