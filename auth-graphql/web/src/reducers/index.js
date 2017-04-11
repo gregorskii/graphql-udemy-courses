@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
 
-const rootReducer = combineReducers({
-  state: (state = {}) => state
-});
-
-export default rootReducer;
+export default (client) => {
+  return combineReducers({
+    apollo: client.reducer()
+  });
+};

@@ -1,13 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux';
+import { ApolloProvider } from 'react-apollo';
 
 import AppRouter from 'src/routes';
-import store from 'src/store';
+import { store, client } from 'src/store';
 
 ReactDOM.render(
-  <Provider store={store}>
+  <ApolloProvider store={store} client={client}>
     <AppRouter />
-  </Provider>,
+  </ApolloProvider>,
   document.querySelector('.container')
 );

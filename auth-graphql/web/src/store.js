@@ -1,11 +1,21 @@
 import { createStore, applyMiddleware } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import createStorybookListener from 'storybook-addon-redux-listener';
-import promise from 'redux-promise';
+import ApolloClient, { createNetworkInterface } from 'apollo-client';
 
-import Reducers from 'reducers';
+import getReducers from 'reducers';
 
-const middlewares = [promise];
+const networkInterface = createNetworkInterface({
+  uri: `${process.env.API_URL}/grapqhl`
+});
+
+const client = new ApolloClient({
+  networkInterface,
+  dataIdFromObject: o => o.id
+});
+
+const Reducers = getReducers(client);
+const middlewares = [client.middleware()];
 
 if (process.env.NODE_ENV === 'storybook') {
   const reduxListener = createStorybookListener();
@@ -21,4 +31,4 @@ const createStoreWithMiddleware = (reducers) => {
 
 const store = createStoreWithMiddleware(Reducers);
 
-export default store;
+export { store, client };
