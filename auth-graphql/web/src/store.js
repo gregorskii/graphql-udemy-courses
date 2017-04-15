@@ -6,7 +6,7 @@ import ApolloClient, { createNetworkInterface } from 'apollo-client';
 import getReducers from 'reducers';
 
 const networkInterface = createNetworkInterface({
-  uri: `${process.env.API_URL}/grapqhl`
+  uri: `${process.env.API_URL}/graphql`
 });
 
 const client = new ApolloClient({

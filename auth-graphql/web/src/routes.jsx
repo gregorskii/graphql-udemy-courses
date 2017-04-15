@@ -15,7 +15,9 @@ const AppRouter = () => {
       <App>
         <Switch>
           <Route exact path="/" component={Home} />
-          <Route path="/test" render={() => (<div>Test</div>)} />
+          <Route path="/login" render={() => (<div>login</div>)} />
+          <Route path="/signup" render={() => (<div>signup</div>)} />
+          <Route path="/signout" render={() => (<div>signout</div>)} />
           <Route component={FourOFour} />
         </Switch>
       </App>

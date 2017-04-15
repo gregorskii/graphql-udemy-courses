@@ -17,7 +17,7 @@ module.exports = {
     filename: utils.assetsPath('scripts/[name].[chunkhash].js')
   },
   resolve: {
-    extensions: ['.js', '.jsx', '.css', '.scss'],
+    extensions: ['.js', '.jsx', '.css', '.scss', '.gql'],
     alias: aliases.resolveAlias
   },
   module: {

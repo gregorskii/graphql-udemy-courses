@@ -2,7 +2,7 @@ import API from 'api';
 
 export const TEST_API = 'TEST_API';
 
-const { testApiWrapped } = API;
+const { testApiWrapped } = API.requests;
 
 export const testApi = () => {
   const request = testApiWrapped();
