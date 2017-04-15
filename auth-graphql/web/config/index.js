@@ -2,7 +2,6 @@ const path = require('path');
 const paths = require('../build/paths');
 const devEnv = require('./dev.env');
 const prodEnv = require('./prod.env');
-const testEnv = require('./test.env');
 
 const baseConf = {
   scriptsOutputPath: 'scripts',
@@ -14,15 +13,6 @@ const publicPath = '/';
 
 module.exports = {
   favicon: path.join(paths.src, 'static', 'favicon.png'),
-
-  test: Object.assign({}, baseConf, {
-    env: testEnv,
-    outputPath: paths.dist,
-    indexTemplatePath: path.join(paths.src, 'index.html'),
-    indexOutputPath: path.join(paths.dist, 'index.html'),
-    staticDirectory: path.join(paths.src, 'static'),
-    assetsPublicPath: publicPath
-  }),
 
   dev: Object.assign({}, baseConf, {
     // Which env.js file to use
