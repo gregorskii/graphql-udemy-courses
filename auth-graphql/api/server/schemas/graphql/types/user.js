@@ -7,8 +7,8 @@ import {
 const UserQueryType = new GraphQLObjectType({
   name: 'User',
   fields: () => ({
-    id: { type: GraphQLString },
-    email: { type: GraphQLID }
+    id: { type: GraphQLID },
+    email: { type: GraphQLString }
   })
 });
 

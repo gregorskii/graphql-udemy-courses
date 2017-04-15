@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import 'styles/base.global.scss';
 import Header from 'components/header';
@@ -11,7 +12,7 @@ const App = ({ children }) => (
 );
 
 App.propTypes = {
-  children: React.PropTypes.node
+  children: PropTypes.node
 };
 
 App.defaultProps = {

@@ -7,14 +7,17 @@ import Home from 'pages/home';
 import Welcome from 'components/welcome';
 import { Provider } from 'react-redux';
 import store from 'src/store';
+import { MemoryRouter } from 'react-router-dom';
 
 describe('Home', function() {
   describe('rendering', function() {
     beforeEach(function() {
       this.wrapper = mount(
-        <Provider store={store}>
-          <Home />
-        </Provider>
+        <MemoryRouter>
+          <Provider store={store}>
+            <Home />
+          </Provider>
+        </MemoryRouter>
       );
     });
 

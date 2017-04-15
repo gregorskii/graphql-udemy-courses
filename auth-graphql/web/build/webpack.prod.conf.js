@@ -5,8 +5,10 @@ const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const StatsPlugin = require('stats-webpack-plugin');
 const CompressionWebpackPlugin = require('compression-webpack-plugin');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 const baseWebpackConfig = require('./webpack.base.conf');
+const paths = require('./paths');
 const config = require('../config');
 const utils = require('./utils');
 
@@ -16,6 +18,16 @@ const env = conf.env;
 const webpackConfig = merge(baseWebpackConfig, {
   devtool: conf.productionSourceMap ? '#source-map' : false,
   plugins: [
+    new CleanWebpackPlugin(
+      [paths.dist],
+      {
+        root: paths.projectRoot,
+        verbose: true,
+        dry: false,
+        exclude: [],
+        watch: process.env.watch
+      }
+    ),
     new webpack.LoaderOptionsPlugin({
       debug: false,
       context: __dirname
