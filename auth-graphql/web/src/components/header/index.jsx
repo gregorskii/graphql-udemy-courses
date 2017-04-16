@@ -8,6 +8,7 @@ import API from 'src/api';
 const { currentUserQuery } = API.queries;
 
 const Header = (props) => {
+  console.log(props);
   if (props.loading) {
     return (<nav><div className="nav-wrapper" /></nav>);
   }

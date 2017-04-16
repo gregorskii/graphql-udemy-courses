@@ -1,6 +1,12 @@
-import passport from './passport';
+import jwt from 'jwt-simple';
 
-export default (app) => {
-  app.use(passport.initialize());
-  app.use(passport.session());
+const createTokenForUser = (user) => {
+  return jwt.encode({
+    // subject
+    sub: user.id,
+    // issued at
+    iat: new Date().getTime()
+  }, process.env.JWT_SECRET);
 };
+
+export default createTokenForUser;

@@ -26,7 +26,7 @@ passport.deserializeUser((id, done) => {
 // callback, including a string that messages why the authentication process failed.
 // This string is provided back to the GraphQL client.
 
-passport.use(new LocalStrategy({ usernameField: 'email' }, (email, password, done) => {
+const localStrategy = new LocalStrategy({ usernameField: 'email' }, (email, password, done) => {
   // Verify the email and password
   const query = UserModel.findOne({ email });
 
@@ -46,6 +46,8 @@ passport.use(new LocalStrategy({ usernameField: 'email' }, (email, password, don
       done(err);
     })
   ;
-}));
+});
+
+passport.use(localStrategy);
 
 export default passport;

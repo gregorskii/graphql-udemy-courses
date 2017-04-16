@@ -2,6 +2,7 @@ import passport from 'passport';
 
 import { logger } from '../interfaces';
 import { UserModel } from '../models';
+import createTokenForUser from '../services/auth';
 
 class AuthController {
   static signup({ email, password, req }) {
@@ -23,7 +24,13 @@ class AuthController {
             return new Promise((resolve, reject) => {
               req.logIn(user, (err) => {
                 if (err) { reject(err); }
-                resolve(user);
+
+                resolve(
+                  Object.assign(
+                    user,
+                    { token: createTokenForUser(user) }
+                  )
+                );
               });
             });
           })
@@ -43,7 +50,12 @@ class AuthController {
       passport.authenticate('local', (err, user) => {
         if (!user) { reject('Invalid credentials.'); }
 
-        req.login(user, () => resolve(user));
+        req.login(user, () => resolve(
+          Object.assign(
+            user,
+            { token: createTokenForUser(user) }
+          )
+        ));
       })({ body: { email, password } });
     });
   }

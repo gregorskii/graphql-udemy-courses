@@ -3,20 +3,22 @@ import bunyanMiddleware from 'bunyan-middleware';
 import cors from 'cors';
 
 import { logger } from '../interfaces';
-import auth from './auth';
-import session from './session';
+import passport from './passport';
 import graphql from './graphql';
+import jwt from './jwt';
 
 export default (app) => {
   const whitelist = process.env.CORS_WHITELIST.split(',');
-  const corsOptions = { origin: whitelist };
+  const corsOptions = {
+    origin: whitelist
+  };
 
   // App setup
   app.use(bunyanMiddleware(logger));
   app.use(bodyParser.json({ type: '*/*' }));
   app.use(cors(corsOptions));
+  app.use(passport.initialize());
 
-  session(app);
-  auth(app);
+  jwt(app);
   graphql(app);
 };

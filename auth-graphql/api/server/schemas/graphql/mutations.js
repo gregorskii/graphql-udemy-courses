@@ -1,40 +1,18 @@
 import {
-  GraphQLObjectType,
-  GraphQLString
+  GraphQLObjectType
 } from 'graphql';
 
-import UserType from './types/user';
-import AuthController from '../../controllers/auth';
+import signup from './mutations/signup';
+import login from './mutations/login';
+import logout from './mutations/logout';
 
 const mutation = new GraphQLObjectType({
   name: 'Mutation',
   fields: () => ({
-    signup: {
-      type: UserType,
-      args: {
-        email: { type: GraphQLString },
-        password: { type: GraphQLString }
-      },
-      resolve(parentValue, { email, password }, req) {
-        return AuthController.signup({ email, password, req });
-      }
-    },
-    login: {
-      type: UserType,
-      args: {
-        email: { type: GraphQLString },
-        password: { type: GraphQLString }
-      },
-      resolve(parentValue, { email, password }, req) {
-        return AuthController.login({ email, password, req });
-      }
-    },
-    logout: {
-      type: UserType,
-      resolve(parentValue, args, req) {
-        return AuthController.logout(req);
-      }
-    }
+    signup,
+    login,
+    // NOTE: ignoring logout on the server, as there is no session to revoke
+    logout
   })
 });
 
