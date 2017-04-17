@@ -16,20 +16,32 @@ class Login extends Component {
     super(props);
 
     this.onLoginSubmit = this.onLoginSubmit.bind(this);
+
+    this.state = {
+      errors: []
+    };
   }
 
   onLoginSubmit({ email, password }) {
     this.props.mutate({
       variables: { email, password }
+    }).catch((res) => {
+      const errors = res.graphQLErrors.map(error => error.message);
+      this.setState({ errors });
     });
   }
 
   render() {
     return (
-      <section>
+      <section className="row">
         <h2>Login</h2>
         <p>Our service provides great things, login below.</p>
-        <AuthForm onSubmit={this.onLoginSubmit} />
+        <div className="col s6">
+          <AuthForm
+            errors={this.state.errors}
+            onSubmit={this.onLoginSubmit}
+          />
+        </div>
       </section>
     );
   }

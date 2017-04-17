@@ -14,6 +14,20 @@ const renderFieldFn = renderField(true);
 const AuthFormComponent = (props) => {
   const { handleSubmit, pristine, submitting } = props;
 
+  const renderErrors = (errors) => {
+    if (errors.length) {
+      const errorsList = errors.map((error) => {
+        return (<p key={error} className="red-text">{error}</p>);
+      });
+
+      return (
+        <div className="errors">{errorsList}</div>
+      );
+    }
+
+    return null;
+  };
+
   return (
     <form
       className="signup-form"
@@ -42,6 +56,7 @@ const AuthFormComponent = (props) => {
           validate={[required, passwordMatch]}
         />
       : null}
+      {renderErrors(props.errors)}
       <button
         className="btn btn-outline-success"
         type="submit"
@@ -55,11 +70,13 @@ AuthFormComponent.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   pristine: PropTypes.bool.isRequired,
   submitting: PropTypes.bool.isRequired,
-  passwordConfirm: PropTypes.bool
+  passwordConfirm: PropTypes.bool,
+  errors: PropTypes.arrayOf(PropTypes.string)
 };
 
 AuthFormComponent.defaultProps = {
-  passwordConfirm: false
+  passwordConfirm: false,
+  errors: []
 };
 
 const AuthForm = reduxForm({

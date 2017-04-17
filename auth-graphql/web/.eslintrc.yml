@@ -22,6 +22,7 @@ rules:
   no-console: 1
   no-alert: 1
   no-unused-vars: 1
+  no-debugger: 1
   spaced-comment: 1
   class-methods-use-this: 1
   space-before-function-paren: 0
