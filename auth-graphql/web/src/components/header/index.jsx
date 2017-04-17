@@ -2,13 +2,22 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { graphql, compose } from 'react-apollo';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
 import API from 'src/api';
+import ACTIONS from 'src/actions';
 
 const { currentUserQuery } = API.queries;
+const { logout } = ACTIONS;
 
-const Header = (props) => {
-  console.log(props);
+const Header = (props, context) => {
+  const onSignoutClick = () => {
+    props.logout();
+
+    context.router.history.push('/signout');
+  };
+
   if (props.loading) {
     return (<nav><div className="nav-wrapper" /></nav>);
   }
@@ -16,31 +25,56 @@ const Header = (props) => {
   return (
     <nav>
       <div className="nav-wrapper">
-        <Link to="/">Home</Link>
+        <Link to="/" className="brand-logo left">Home</Link>
         <ul id="nav-mobile" className="right hide-on-med-and-down">
-          {props.user ? null : <li><Link to="/login">Login</Link></li>}
-          {props.user ? null : <li><Link to="/signup">Signup</Link></li>}
-          {props.user ? <li><Link to="/signout">Signout</Link></li> : null}
+          {props.authenticated ? null : <li><Link to="/login">Login</Link></li>}
+          {props.authenticated ? null : <li><Link to="/signup">Signup</Link></li>}
+          {props.authenticated ?
+            <li>
+              <button
+                className="waves-effect waves-light btn"
+                onClick={onSignoutClick}
+              >Signout</button>
+            </li>
+           : null}
         </ul>
       </div>
     </nav>
   );
 };
 
+Header.contextTypes = {
+  router: React.PropTypes.shape({
+    history: React.PropTypes.object.isRequired,
+  }),
+};
+
 Header.propTypes = {
   loading: PropTypes.bool,
-  user: PropTypes.shape()
+  authenticated: PropTypes.bool,
+  logout: PropTypes.func.isRequired
 };
 
 Header.defaultProps = {
-  loading: false,
-  user: null
+  authenticated: false,
+  loading: false
 };
 
 export const HeaderComponent = Header;
 
+const mapStateToProps = ({ auth }) => {
+  return {
+    authenticated: auth.authenticated
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return bindActionCreators({ logout }, dispatch);
+};
+
 export default compose(
   graphql(currentUserQuery, {
     props: ({ data: { loading, user } }) => ({ user, loading })
-  })
+  }),
+  connect(mapStateToProps, mapDispatchToProps)
 )(Header);

@@ -9,6 +9,31 @@ const networkInterface = createNetworkInterface({
   uri: `${process.env.API_URL}/graphql`
 });
 
+networkInterface.use([{
+  applyMiddleware(req, next) {
+    if (!req.options.headers) {
+      req.options.headers = {};
+    }
+    const token = localStorage.getItem('token');
+    if (token) {
+      req.options.headers.token = token;
+    }
+    next();
+  }
+}]);
+
+networkInterface.useAfter([{
+  applyAfterware({ response }, next) {
+    const responseClone = response.clone();
+    responseClone.json().then((data) => {
+      if (data.data.login && data.data.login.token) {
+        localStorage.setItem('token', data.data.login.token);
+      }
+    });
+    next();
+  }
+}]);
+
 const client = new ApolloClient({
   networkInterface,
   dataIdFromObject: o => o.id

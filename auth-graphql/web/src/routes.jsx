@@ -7,6 +7,8 @@ import {
 
 import App from 'components/app';
 import Home from 'pages/home';
+import Signup from 'pages/signup';
+import Login from 'pages/login';
 import FourOFour from 'pages/404';
 
 const AppRouter = () => {
@@ -15,8 +17,8 @@ const AppRouter = () => {
       <App>
         <Switch>
           <Route exact path="/" component={Home} />
-          <Route path="/login" render={() => (<div>login</div>)} />
-          <Route path="/signup" render={() => (<div>signup</div>)} />
+          <Route path="/login" component={Login} />
+          <Route path="/signup" component={Signup} />
           <Route path="/signout" render={() => (<div>signout</div>)} />
           <Route component={FourOFour} />
         </Switch>
