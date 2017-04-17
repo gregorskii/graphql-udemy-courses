@@ -25,9 +25,19 @@ networkInterface.use([{
 networkInterface.useAfter([{
   applyAfterware({ response }, next) {
     const responseClone = response.clone();
-    responseClone.json().then((data) => {
-      if (data.data.login && data.data.login.token) {
-        localStorage.setItem('token', data.data.login.token);
+    responseClone.json().then((res) => {
+      let userData;
+
+      if (res.data.login && res.data.login.token) {
+        userData = res.data.login;
+      }
+
+      if (res.data.signup && res.data.signup.token) {
+        userData = res.data.signup;
+      }
+
+      if (userData && userData.token) {
+        localStorage.setItem('token', userData.token);
       }
     });
     next();

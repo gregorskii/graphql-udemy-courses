@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { graphql } from 'react-apollo';
 
-import SignupForm from 'components/signup-form';
+import AuthForm from 'components/auth-form';
 import API from 'src/api';
 
 const { signupMutation } = API.mutations;
@@ -29,7 +29,7 @@ class Signup extends Component {
       <section>
         <h2>Sign up</h2>
         <p>Our service provides great things, create an account below.</p>
-        <SignupForm onSubmit={this.onSignUpSubmit} />
+        <AuthForm onSubmit={this.onSignUpSubmit} passwordConfirm />
       </section>
     );
   }

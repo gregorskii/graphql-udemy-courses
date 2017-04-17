@@ -11,7 +11,7 @@ import {
 
 const renderFieldFn = renderField(true);
 
-const SignupFormComponent = (props) => {
+const AuthFormComponent = (props) => {
   const { handleSubmit, pristine, submitting } = props;
 
   return (
@@ -33,13 +33,15 @@ const SignupFormComponent = (props) => {
         component={renderFieldFn}
         validate={required}
       />
-      <Field
-        name="password_confirm"
-        type="password"
-        label="Confirm Password"
-        component={renderFieldFn}
-        validate={[required, passwordMatch]}
-      />
+      {props.passwordConfirm ?
+        <Field
+          name="password_confirm"
+          type="password"
+          label="Confirm Password"
+          component={renderFieldFn}
+          validate={[required, passwordMatch]}
+        />
+      : null}
       <button
         className="btn btn-outline-success"
         type="submit"
@@ -49,14 +51,19 @@ const SignupFormComponent = (props) => {
   );
 };
 
-SignupFormComponent.propTypes = {
+AuthFormComponent.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   pristine: PropTypes.bool.isRequired,
-  submitting: PropTypes.bool.isRequired
+  submitting: PropTypes.bool.isRequired,
+  passwordConfirm: PropTypes.bool
 };
 
-const SignupForm = reduxForm({
-  form: 'signUp'
-})(SignupFormComponent);
+AuthFormComponent.defaultProps = {
+  passwordConfirm: false
+};
 
-export default SignupForm;
+const AuthForm = reduxForm({
+  form: 'authForm'
+})(AuthFormComponent);
+
+export default AuthForm;

@@ -1,3 +1,5 @@
+/* eslint jsx-a11y/no-static-element-interactions: 0 */
+
 import React from 'react';
 import PropTypes from 'prop-types';
 import { graphql, compose } from 'react-apollo';
@@ -12,9 +14,10 @@ const { currentUserQuery } = API.queries;
 const { logout } = ACTIONS;
 
 const Header = (props, context) => {
-  const onSignoutClick = () => {
+  const onSignoutClick = (event) => {
     props.logout();
 
+    event.preventDefault();
     context.router.history.push('/signout');
   };
 
@@ -29,14 +32,7 @@ const Header = (props, context) => {
         <ul id="nav-mobile" className="right hide-on-med-and-down">
           {props.authenticated ? null : <li><Link to="/login">Login</Link></li>}
           {props.authenticated ? null : <li><Link to="/signup">Signup</Link></li>}
-          {props.authenticated ?
-            <li>
-              <button
-                className="waves-effect waves-light btn"
-                onClick={onSignoutClick}
-              >Signout</button>
-            </li>
-           : null}
+          {props.authenticated ? <li><a onClick={onSignoutClick}>Signout</a></li> : null}
         </ul>
       </div>
     </nav>

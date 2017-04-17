@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { graphql } from 'react-apollo';
 
-import LoginForm from 'components/login-form';
+import AuthForm from 'components/auth-form';
 import API from 'src/api';
 
 const { loginMutation } = API.mutations;
@@ -29,7 +29,7 @@ class Login extends Component {
       <section>
         <h2>Login</h2>
         <p>Our service provides great things, login below.</p>
-        <LoginForm onSubmit={this.onLoginSubmit} />
+        <AuthForm onSubmit={this.onLoginSubmit} />
       </section>
     );
   }
