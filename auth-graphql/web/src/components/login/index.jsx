@@ -12,6 +12,12 @@ class Login extends Component {
     mutate: PropTypes.func.isRequired
   }
 
+  static contextTypes = {
+    router: React.PropTypes.shape({
+      history: React.PropTypes.object.isRequired,
+    })
+  };
+
   constructor(props) {
     super(props);
 
@@ -25,6 +31,10 @@ class Login extends Component {
   onLoginSubmit({ email, password }) {
     this.props.mutate({
       variables: { email, password }
+    }).then(() => {
+      setTimeout(() => {
+        this.context.router.history.push('/dashboard');
+      }, 1000);
     }).catch((res) => {
       const errors = res.graphQLErrors.map(error => error.message);
       this.setState({ errors });
@@ -40,6 +50,7 @@ class Login extends Component {
           <AuthForm
             errors={this.state.errors}
             onSubmit={this.onLoginSubmit}
+            submitText={'Log In'}
           />
         </div>
       </section>

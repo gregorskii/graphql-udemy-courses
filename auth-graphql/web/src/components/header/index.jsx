@@ -41,8 +41,8 @@ const Header = (props, context) => {
 
 Header.contextTypes = {
   router: React.PropTypes.shape({
-    history: React.PropTypes.object.isRequired,
-  }),
+    history: React.PropTypes.object.isRequired
+  })
 };
 
 Header.propTypes = {

@@ -9,6 +9,8 @@ import {
   passwordMatch
 } from 'components/helpers/forms';
 
+import styles from './auth-form.scss';
+
 const renderFieldFn = renderField(true);
 
 const AuthFormComponent = (props) => {
@@ -21,7 +23,7 @@ const AuthFormComponent = (props) => {
       });
 
       return (
-        <div className="errors">{errorsList}</div>
+        <div className={styles.errorList}>{errorsList}</div>
       );
     }
 
@@ -61,7 +63,7 @@ const AuthFormComponent = (props) => {
         className="btn btn-outline-success"
         type="submit"
         disabled={pristine || submitting}
-      >Sign Up</button>
+      >{props.submitText}</button>
     </form>
   );
 };
@@ -71,12 +73,14 @@ AuthFormComponent.propTypes = {
   pristine: PropTypes.bool.isRequired,
   submitting: PropTypes.bool.isRequired,
   passwordConfirm: PropTypes.bool,
-  errors: PropTypes.arrayOf(PropTypes.string)
+  errors: PropTypes.arrayOf(PropTypes.string),
+  submitText: PropTypes.string
 };
 
 AuthFormComponent.defaultProps = {
   passwordConfirm: false,
-  errors: []
+  errors: [],
+  submitText: 'Submit'
 };
 
 const AuthForm = reduxForm({
